@@ -1,6 +1,17 @@
   
  #This example uses Python 2.7 and the python-request library.
 
+
+'''
+Steps for execution:
+1) cd to Documents/Environments
+2) activate crypto_api_env python virtual environment in shell:
+	source crypto_api_env/bin/activate
+3) cd into crypto_api_env/crypto_api to move to git repo.
+
+'''
+
+
 from requests import Request, Session
 from requests.exceptions import ConnectionError, Timeout, TooManyRedirects
 import json
@@ -27,5 +38,4 @@ try:
   print(data)
 except (ConnectionError, Timeout, TooManyRedirects) as e:
   print(e)
-  
   
