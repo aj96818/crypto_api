@@ -33,11 +33,13 @@ try:
   
   crypto_tickers = ['CVC', 'LSK', 'OMG', 'BTC', 'ETH', 'NEO', 'ADA', 'OCEAN', 'DOT', 'TRAC', 'MRPH', 'BAL', 'ZRX'
                     'COMP', 'MKR', 'SNX', 'BNB', 'LINK', 'UNI', 'XMR', 'ALGO', 'UMA', 'REN', 'BAT', 'ONT'
-                    , 'KNC', 'UBT', 'OMI', 'EWT', 'SOL', 'WPR', 'XLM', 'ATOM', 'XRP', 'EOS', 'MANA']
+                    , 'KNC', 'UBT', 'OMI', 'EWT', 'SOL', 'WPR', 'XLM', 'ATOM', 'XRP', 'EOS', 'MANA', 'STORJ', 'SC']
 
   #df_short.crypto_tickers.isin(crypto_tickers)
   df_out = df_short[df_short['symbol'].isin(crypto_tickers)]
 #  df_out.to_csv(r'coinmarketcap_api_v2.csv')
+  df_out.columns = ['symbol', 'name', 'date_added', 'last_updated', 'price_usd', 'volume_24h', 'market_cap', 'percent_change_24h', 'percent_change_7d', 'percent_change_30d', 'percent_change_60d', 'percent_change_90d']
+
   win_path = r'C:\\Users\\aljackson\\Documents\\Environments\\crypto_api\\CoinmarketcapAPI_Crypto_Data.csv'
   df_out.to_csv(win_path, mode = 'a', index = False, header = False)
 
