@@ -33,7 +33,8 @@ try:
   
   crypto_tickers = ['CVC', 'LSK', 'OMG', 'BTC', 'ETH', 'NEO', 'ADA', 'OCEAN', 'DOT', 'TRAC', 'MRPH', 'BAL', 'ZRX'
                     'COMP', 'MKR', 'SNX', 'BNB', 'LINK', 'UNI', 'XMR', 'ALGO', 'UMA', 'REN', 'BAT', 'ONT'
-                    , 'KNC', 'UBT', 'OMI', 'EWT', 'SOL', 'WPR', 'XLM', 'ATOM', 'XRP', 'EOS', 'MANA', 'STORJ', 'SC']
+                    , 'KNC', 'UBT', 'OMI', 'EWT', 'SOL', 'WPR', 'XLM', 'ATOM', 'XRP', 'EOS', 'MANA', 'STORJ', 'SC'
+                    , 'VTX', 'DWZ', 'CAKE', 'PNT', 'CHART', 'BLANK', 'TRB', 'DVG', 'ALPA', 'PHA', 'KSM']
 
   #df_short.crypto_tickers.isin(crypto_tickers)
   df_out = df_short[df_short['symbol'].isin(crypto_tickers)]
