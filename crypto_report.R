@@ -34,7 +34,7 @@ coin_api <- read_csv("C:/Users/aljackson/Documents/Environments/crypto_api/Coinm
       percent_change_60d = col_double(),
       percent_change_90d = col_double()))
 
-coin_api <- coin_api[coin_api$symbol %in% as.vector(coin_report$Ticker), ]
+coin_api <- coin_api[coin_api$symbol %in% as.vector(coin_port$Ticker), ]
 coin_api <- coin_api[!coin_api$name %in% c('golden-ratio-token', 'unicorn-token', 'universe'),]
 
 today_date <- Sys.Date()
@@ -52,7 +52,7 @@ t180_data <- coin_api[as.Date(as.POSIXct(coin_api$last_updated)) == close180, ]
 t365_data <- coin_api[as.Date(as.POSIXct(coin_api$last_updated)) == close365, ]
 
 data_today <- coin_api[as.Date(as.POSIXct(coin_api$last_updated)) == today_date, ]
-crypto_today <- data_today[data_today$symbol %in% as.vector(coin_report$Ticker), ]
+crypto_today <- data_today[data_today$symbol %in% as.vector(coin_port$Ticker), ]
 
 # Merge historical prices dataframes with current prices dataframe and eliminate columns that have all NA's.
 
