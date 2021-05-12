@@ -17,9 +17,7 @@ coin_port <- read_csv("C:/Users/aljackson/Documents/Environments/crypto_api/cryp
       `Total Return` = col_double()))
 
 coin_port_vars <- c('Crypto', 'Ticker', 'Avg Cost', 'Quantity')
-
 coin_port <- coin_port[coin_port_vars]
-
 
 coin_api <- read_csv("C:/Users/aljackson/Documents/Environments/crypto_api/CoinmarketcapAPI_Crypto_Data.csv", col_types = cols(symbol = col_character(),
       name = col_character(),
@@ -35,7 +33,7 @@ coin_api <- read_csv("C:/Users/aljackson/Documents/Environments/crypto_api/Coinm
       percent_change_90d = col_double()))
 
 coin_api <- coin_api[coin_api$symbol %in% as.vector(coin_port$Ticker), ]
-coin_api <- coin_api[!coin_api$name %in% c('golden-ratio-token', 'unicorn-token', 'universe'),]
+coin_api <- coin_api[!coin_api$name %in% c('golden-ratio-token', 'unicorn-token', 'universe', 'stox'),]
 
 today_date <- Sys.Date()
 today_minus_180 <- as.vector(Sys.Date() - 180)
@@ -82,6 +80,11 @@ merged_data <- merged_data[merged_data_vars]
 colnames(merged_data) <- c('symbol', 'name', 'last_updated', 'price_usd', '24h', '7d', 
                            '30d', '60d', '90d', '180d', '365d')
 
+merged_data$`24h` <- round(merged_data$`24h`, digits = 0)
+merged_data$`7d` <- round(merged_data$`7d`, digits = 0)
+merged_data$`30d` <- round(merged_data$`30d`, digits = 0)
+merged_data$`60d` <- round(merged_data$`60d`, digits = 0)
+merged_data$`90d` <- round(merged_data$`90d`, digits = 0)
 
 crypto_report <- merge(coin_port, merged_data, by.x = 'Ticker', by.y = 'symbol', all.x = T)
 
@@ -103,13 +106,13 @@ total_df <- data.frame(Ticker = c('Total'),
                        , name = ''
                        , last_updated = today_date
                        , price_usd = 0
-                       , `24h` = mean(crypto_report$`24h`)
-                       , `7d` = mean(crypto_report$`7d`)
-                       , `30d` = mean(crypto_report$`30d`)
-                       , `60d` = mean(crypto_report$`60d`)
-                       , `90d` = mean(crypto_report$`90d`)
-                       , `180d` = mean(crypto_report$`180d`)
-                       , `365d` = mean(crypto_report$`365d`)
+                       , `24h` = round(mean(crypto_report$`24h`, na.rm = T), digits = 0)
+                       , `7d` = round(mean(crypto_report$`7d`, na.rm = T), digits = 0)
+                       , `30d` = round(mean(crypto_report$`30d`, na.rm = T), digits = 0)
+                       , `60d` = round(mean(crypto_report$`60d`, na.rm = T), digits = 0)
+                       , `90d` = round(mean(crypto_report$`90d`, na.rm = T), digits = 0)
+                       , `180d` = round(mean(crypto_report$`180d`, na.rm = T), digits = 0)
+                       , `365d` = round(mean(crypto_report$`365d`, na.rm = T), digits = 0)
                        , market_value = sum(crypto_report$market_value, na.rm=T)
                        , total_cost = sum(crypto_report$total_cost, na.rm=T)
                        , total_return = sum(crypto_report$total_return, na.rm=T)
@@ -126,5 +129,9 @@ colnames(total_df) <- c('Ticker', 'Crypto', 'Avg Cost', 'Quantity', 'name', 'las
 crypto_report <- rbind(crypto_report, total_df)
 
 crypto_report$total_return_pct <- round((crypto_report$total_return_pct * 100), digits = 0)
+crypto_report$price_usd <- round(crypto_report$price_usd, digits = 2)
+crypto_report$market_value <- round(crypto_report$market_value, digits = 2)
+crypto_report$total_cost <- round(crypto_report$total_cost, digits = 2)
+crypto_report$total_return <- round(crypto_report$total_return, digits = 2)
 
-write_csv(crypto_report, paste0('crypto_report', today_date, '.csv'))
+write_csv(crypto_report, paste0('crypto_report_', today_date, '.csv'))
